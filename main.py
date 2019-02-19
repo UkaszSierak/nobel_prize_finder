@@ -34,21 +34,38 @@ import json
 
 dataset = {**json.load(open('prize.json', 'r')), **json.load(open('laureate.json', 'r'))}
 
+def checkvalue(item: str, data: list):
+    item = item.lower()
+    if item not in data:
+        new_item = input("There is no such name.\n"
+                         "Please type it again: ")
+        checkvalue(new_item, data)
+    else:
+        pass
+
 def printCategories(data):
     categories = []
 
     for item in data:
         if item['category'] not in categories:
             categories.append(item['category'])
+    return categories
 
-    print("Chose category from the following:%s"%'\n\t - '.join(categories))
+categories = printCategories(dataset['prizes'])
 
 print("Nobel Prize Finder finds for you information about nobel prizes :)\n\n\n"
       "Type in correct order prize category and year that u interested in\n"
       "Tip: press 'Enter' after each parameter you type\n\n")
-printCategories(dataset['prizes'])
+
+print("Chose category from the following:%s"%'\n\t - '.join(categories))
+
 category = input("Enter category name: ")
-year = input("Chose year from 1901 till today: ")
+
+checkvalue(category, categories)
+
+year = input("Chose year from 1901 till 2018: ")
+
+
 
 
 
